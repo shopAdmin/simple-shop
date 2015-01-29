@@ -17,6 +17,7 @@
 		$registry->router = new router($registry);
 		$registry->template = new Template($registry);
 		$registry->router->setPath(__SITE_PATH . '\controller');
+                dsahkjdhsakj
 		
 ?>
 
