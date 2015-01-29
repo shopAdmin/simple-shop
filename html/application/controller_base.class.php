@@ -1,0 +1,36 @@
+<?php
+
+Abstract class baseController {
+
+    protected $registry;
+
+    function __construct($registry) {
+        $this->registry = $registry;
+    }
+
+    //wszystkie kontrollery dziedziczące kontroller bazowy muszą posiadać metodę index
+    abstract function index();
+
+    function ograniczDostepTylkoDlaAdmina() {
+        $login = $_SESSION['user'];
+        $db = $this->registry->db;
+        if (empty($login) || (!$db::isUserInRole($login, 'admin'))) {
+            $location = '/' . APP_ROOT . '/';
+            header("Location: $location");
+            return;
+        }
+    }
+
+    function ograniczDostepTylkoDlaZalogowanegoUzytkownika() {
+        $login = $_SESSION['user'];
+        $db = $this->registry->db;
+        if (empty($login)) {
+            $location = '/' . APP_ROOT . '/';
+            header("Location: $location");
+            return;
+        }
+    }
+
+}
+
+?>
